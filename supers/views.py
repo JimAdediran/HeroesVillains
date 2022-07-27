@@ -14,6 +14,7 @@ from supers import serializers
 def supers_list(request):
     supers = Supers.objects.all()
     custom_response_dict = {}
+    super_types = SuperType.objects.all()
     if request.method == 'GET':
         super_type_name = request.query_params.get('super_type')
         print(super_type_name)
@@ -24,10 +25,10 @@ def supers_list(request):
             serializer = SupersSerializer(queryset, many=True)
             return Response(serializer.data)
         else: 
-            for super in supers:
-                super_types = Supers.objects.filter("Hero")
+            for super_type in super_types:
+                super_types = Supers.objects.filter(super_type_id=1)
                 hero_serializer = SupersSerializer(super_types, many=True)
-                super_types2 = Supers.objects.filter("Villain")
+                super_types2 = Supers.objects.filter(super_type_id=2)
                 villain_serializer = SupersSerializer(super_types2, many=True)
                 custom_response_dict = {
                     "Heroes": hero_serializer.data,
